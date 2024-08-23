@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Data</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .color-box {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game Data</h1>
+    <div id="data">
+        <div>Coordinates: <span id="coordinates"></span></div>
+        <div>Color:</div>
+        <div id="color-box" class="color-box"></div>
+    </div>
+    <script>
+        async function fetchData() {
+            const response = await fetch('/data');
+            const data = await response.json();
+            if (data.error) {
+                document.getElementById('coordinates').innerText = 'No data available';
+                document.getElementById('color-box').style.backgroundColor = 'transparent';
+            } else {
+                document.getElementById('coordinates').innerText = '( ' + data.coordinates+' )';
+                document.getElementById('color-box').style.backgroundColor = data.color;
+            }
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>

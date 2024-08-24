@@ -87,16 +87,15 @@ class HuesAndCuesGame:
 
         color = self.color_grid.blocks[self.target_coord].cget("bg")
         if is_win:
-            result_msg = f"You win!\n\n{actual_block_info}\n"
+            result_msg = f"You won!\n\n{actual_block_info}\n"
             # Collect winner details when the game is won
             collect_winner_details(self.root)
         else:
-            result_msg = f"You lose!\n\n{actual_block_info}\nProximity: {proximity}"
+            result_msg = f"You lost!\n\n{actual_block_info}\nProximity: {proximity}"
+            show_custom_message_box(self.root, result_msg, self.restart_game, color)
 
         # Update Flask with the result
         self.send_data_to_flask(self.target_coord, color)
-
-        show_custom_message_box(self.root, result_msg, self.restart_game, color)
 
     def get_block_coords(self):
         # Return the coordinates of the selected block and its surrounding blocks

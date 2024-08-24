@@ -24,7 +24,6 @@
 <body>
     <h1>Game Data</h1>
     <div id="data">
-        <div>Coordinates: <span id="coordinates"></span></div>
         <div>Color:</div>
         <div id="color-box" class="color-box"></div>
     </div>
@@ -33,10 +32,8 @@
             const response = await fetch('/data');
             const data = await response.json();
             if (data.error) {
-                document.getElementById('coordinates').innerText = 'No data available';
                 document.getElementById('color-box').style.backgroundColor = 'transparent';
             } else {
-                document.getElementById('coordinates').innerText = '( ' + data.coordinates+' )';
                 document.getElementById('color-box').style.backgroundColor = data.color;
             }
         }

@@ -10,6 +10,18 @@ def show_custom_message_box(root, message, on_restart, color):
     top = tk.Toplevel(root)
     top.title("Game Over")
 
+    # Calculate the position to center the window
+    window_width = 300  # Adjust width as needed
+    window_height = 200  # Adjust height as needed
+
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    x_position = (screen_width // 2) - (window_width // 2)
+    y_position = (screen_height // 2) - (window_height // 2)
+
+    top.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+
     label = tk.Label(top, text=message, padx=20, pady=20)
     label.pack()
 
@@ -21,8 +33,9 @@ def show_custom_message_box(root, message, on_restart, color):
 
     top.mainloop()
 
+
 def collect_winner_details(root):
-    def save_winner_details(p1_name, p1_entry, p2_name, p2_entry):
+    def save_winner_details(p1_name, p1_insta, p1_number, p2_name, p2_insta, p2_number):
         try:
             df = pd.read_excel('winners.xlsx')
         except FileNotFoundError:
@@ -30,18 +43,21 @@ def collect_winner_details(root):
 
         new_entry = pd.DataFrame([{
             'Player1 Name': p1_name,
-            'Player1 Entry': p1_entry,
+            'Player1 Insta': p1_insta,
+            'Player1 Number': p1_number,            
             'Player2 Name': p2_name,
-            'Player2 Entry': p2_entry
+            'Player2 Insta': p2_insta,
+            'Player2 Number': p2_number
         }])
-
         df = pd.concat([df, new_entry], ignore_index=True)
         df.to_excel('winners.xlsx', index=False)
 
-    p1_name = simpledialog.askstring("Input", "Enter Player 1 Name:", parent=root)
-    p1_entry = simpledialog.askstring("Input", "Enter Player 1 Entry Number:", parent=root)
-    p2_name = simpledialog.askstring("Input", "Enter Player 2 Name:", parent=root)
-    p2_entry = simpledialog.askstring("Input", "Enter Player 2 Entry Number:", parent=root)
+    p1_name = simpledialog.askstring("You Won!", "Enter Player 1 Name:", parent=root)
+    p1_insta = simpledialog.askstring("You Won!", "Enter Player 1 Insta Handle:", parent=root)
+    p1_number = simpledialog.askstring("You Won!", "Enter Player 1 Number:", parent=root)
+    p2_name = simpledialog.askstring("You Won!", "Enter Player 2 Name:", parent=root)
+    p2_insta = simpledialog.askstring("You Won!", "Enter Player 2 Insta Handle:", parent=root)
+    p2_number = simpledialog.askstring("You Won!", "Enter Player 2 Number:", parent=root)
 
-    if p1_name and p1_entry and p2_name and p2_entry:
-        save_winner_details(p1_name, p1_entry, p2_name, p2_entry)
+    if p1_name and p1_insta and p2_name and p2_insta and p1_number and p2_number:
+        save_winner_details(p1_name, p1_insta, p1_number, p2_name, p2_insta, p2_number)
